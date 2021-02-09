@@ -21,19 +21,22 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import axios from "axios";
+import Slider from "@material-ui/core/Slider";
 
 const validate = values => {
   const errors = {};
   if (!values.name) {
     errors.firstName = 'Required';
   }
-  console.log(axios({
-    method: "GET",
-    url: `/api/activity/${values.name}`,
-  })
-    .catch(error => {
-      console.log('there was an error marking it inactive')
-    });
+  else {
+    console.log(axios({
+      method: "GET",
+      url: `/api/activity/${values.name}`,
+    })
+      .catch(error => {
+        console.log('there was an error marking it inactive')
+      }));
+  }
   return errors;
 };
 const reset = () => {
@@ -74,45 +77,37 @@ export default function ActivityForm(props) {
                     }
                   />
                 </Grid>
-                <Grid item>
-                  <FormControl component="fieldset">
-                    <FormLabel component="legend">Best Stooge</FormLabel>
-                    <RadioGroup row>
-                      <FormControlLabel
-                        label="Larry"
-                        control={
-                          <Field
-                            name="stooge"
-                            component={Radio}
-                            type="radio"
-                            value="larry"
-                          />
-                        }
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    label="Hungry?"
+                    control={
+                      <Field
+                        name="hungry"
+                        component={Checkbox}
+                        type="checkbox"
                       />
-                      <FormControlLabel
-                        label="Moe"
-                        control={
-                          <Field
-                            name="stooge"
-                            component={Radio}
-                            type="radio"
-                            value="moe"
-                          />
-                        }
-                      />
-                      <FormControlLabel
-                        label="Curly"
-                        control={
-                          <Field
-                            name="stooge"
-                            component={Radio}
-                            type="radio"
-                            value="curly"
-                          />
-                        }
-                      />
-                    </RadioGroup>
-                  </FormControl>
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Field name="hunger">
+                    {props => (
+                      <div>
+                        <Slider
+                          aria-labelledby="discrete-slider"
+                          valueLabelDisplay="auto"
+                          step={10}
+                          marks
+                          min={0}
+                          max={100}
+                          value={props.input.value}
+                          name={props.input.name}
+                          onChange={props.input.onChange}
+                        />
+                      </div>
+                    )}
+                  </Field>
+
                 </Grid>
                 <Grid item>
                   <FormControl component="fieldset">
