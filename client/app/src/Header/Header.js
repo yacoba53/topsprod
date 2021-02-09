@@ -48,7 +48,7 @@ return(
     <AppBar position="static">
       <Toolbar>
       <Link to={'/'} style = {{textDecoration: 'none', color: 'white'}} >
-         <IconButton aria-label="add a new url" color="inherit" >
+         <IconButton aria-label="Home" color="inherit" >
              <CasinoIcon />
          </IconButton>
       </Link>
@@ -59,14 +59,7 @@ return(
         </Link>
         <div className={classes.sectionDesktop}>
         <Link to={'/add'} style = {{textDecoration: 'none', color: 'white'}} >
-           <IconButton aria-label="add a new url" color="inherit" >
-               <AddCircle />
-           </IconButton>
-        </Link>
-        </div>
-        <div className={classes.sectionMobile}>
-        <Link to={'/add'} style = {{textDecoration: 'none', color: 'white'}} >
-           <IconButton aria-label="add a new url" color="inherit" >
+           <IconButton aria-label="add a new activity" color="inherit" >
                <AddCircle />
            </IconButton>
         </Link>

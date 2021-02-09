@@ -19,6 +19,14 @@ module.exports = (app) => {
       .catch((err) => next(err));
   });
 
+  app.get('/api/activities/:activity', (req, res, next) => {
+    Schemas.activities.find({name: req.params.activity})
+      .exec()
+      .then((records) => res.json(records))
+      .catch((err) => next(err));
+  });
+
+
 
   app.post('/api/activity', function (req, res, next) {
     const activity = new Schemas.activities({

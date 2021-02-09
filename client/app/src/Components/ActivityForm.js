@@ -20,27 +20,25 @@ import {
 import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
+import axios from "axios";
 
-const onSubmit = async values => {
-  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-  await sleep(300);
-  window.alert(JSON.stringify(values, 0, 2));
-};
 const validate = values => {
   const errors = {};
-  if (!values.firstName) {
+  if (!values.name) {
     errors.firstName = 'Required';
   }
-  if (!values.lastName) {
-    errors.lastName = 'Required';
-  }
-  if (!values.email) {
-    errors.email = 'Required';
-  }
+  console.log(axios({
+    method: "GET",
+    url: `/api/activity/${values.name}`,
+  })
+    .catch(error => {
+      console.log('there was an error marking it inactive')
+    });
   return errors;
 };
+const reset = () => {
 
-
+}
 
 export default function ActivityForm(props) {
   return (
@@ -48,48 +46,28 @@ export default function ActivityForm(props) {
       <CssBaseline />
       <Form
         onSubmit={props.onSubmit}
-        initialValues={}
+        // initialValues={}
         validate={validate}
         render={({ handleSubmit, reset, submitting, pristine, values }) => (
           <form onSubmit={handleSubmit} noValidate>
             <Paper style={{ padding: 16 }}>
               <Grid container alignItems="flex-start" spacing={2}>
-                <Grid item xs={6}>
-                  <Field
-                    fullWidth
-                    required
-                    name="firstName"
-                    component={TextField}
-                    type="text"
-                    label="First Name"
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <Field
-                    fullWidth
-                    required
-                    name="lastName"
-                    component={TextField}
-                    type="text"
-                    label="Last Name"
-                  />
-                </Grid>
                 <Grid item xs={12}>
                   <Field
-                    name="email"
                     fullWidth
                     required
+                    name="Name"
                     component={TextField}
-                    type="email"
-                    label="Email"
+                    type="text"
+                    label="Name"
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlLabel
-                    label="Employed"
+                    label="At Home Activity?"
                     control={
                       <Field
-                        name="employed"
+                        name="at_home"
                         component={Checkbox}
                         type="checkbox"
                       />
@@ -138,49 +116,49 @@ export default function ActivityForm(props) {
                 </Grid>
                 <Grid item>
                   <FormControl component="fieldset">
-                    <FormLabel component="legend">Sauces</FormLabel>
+                    <FormLabel component="legend">Acceptable Weather</FormLabel>
                     <FormGroup row>
                       <FormControlLabel
-                        label="Ketchup"
+                        label="Sunny"
                         control={
                           <Field
-                            name="sauces"
+                            name="weather"
                             component={Checkbox}
                             type="checkbox"
-                            value="ketchup"
+                            value="Sunny"
                           />
                         }
                       />
                       <FormControlLabel
-                        label="Mustard"
+                        label="High Wind"
                         control={
                           <Field
-                            name="sauces"
+                            name="weather"
                             component={Checkbox}
                             type="checkbox"
-                            value="mustard"
+                            value="high_wind"
                           />
                         }
                       />
                       <FormControlLabel
-                        label="Salsa"
+                        label="Rain"
                         control={
                           <Field
-                            name="sauces"
+                            name="weather"
                             component={Checkbox}
                             type="checkbox"
-                            value="salsa"
+                            value="rain"
                           />
                         }
                       />
                       <FormControlLabel
-                        label="Guacamole 🥑"
+                        label="Snow"
                         control={
                           <Field
-                            name="sauces"
+                            name="weather"
                             component={Checkbox}
                             type="checkbox"
-                            value="guacamole"
+                            value="snow"
                           />
                         }
                       />
@@ -201,36 +179,16 @@ export default function ActivityForm(props) {
                     fullWidth
                     name="Weather"
                     component={Select}
-                    label="Select a City"
+                    label="Select Weather"
                     formControlProps={{ fullWidth: true }}
                   >
-                    <MenuItem value="London">London</MenuItem>
+                    <MenuItem value="Sunny">Sunny</MenuItem>
                     <MenuItem value="Paris">Paris</MenuItem>
                     <MenuItem value="Budapest">
                       A city with a very long Name
                     </MenuItem>
                   </Field>
                 </Grid>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <Grid item xs={6}>
-                    <Field
-                      name="rendez-vous"
-                      component={DatePickerWrapper}
-                      fullWidth
-                      margin="normal"
-                      label="Rendez-vous"
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Field
-                      name="alarm"
-                      component={TimePickerWrapper}
-                      fullWidth
-                      margin="normal"
-                      label="Alarm"
-                    />
-                  </Grid>
-                </MuiPickersUtilsProvider>
                 <Grid item style={{ marginTop: 16 }}>
                   <Button
                     type="button"
